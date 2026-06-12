@@ -175,15 +175,73 @@ const PORT = 3000
 
 
 // DELETE METHOD //
-app.delete('/users/:id', (req,res)=> {
+// app.delete('/users/:id', (req,res)=> {
 
-    const id = req.params.id;
+//     const id = req.params.id;
 
-    res.json({
-        message: 'user deleted',
-        id
+//     res.json({
+//         message: 'user deleted',
+//         id
+//     });
+// });
+
+
+
+
+// MIDDLEWARW //
+// const myMiddleware = (req,res,next)=> {
+//     console.log('middleware exxcuted');
+
+//     next();
+    
+// };
+
+// app.get('/',myMiddleware,(req,res)=> {
+//     res.send('welcome');
+// });
+
+
+
+// APPLICATION LEVEL MIDDLEWARE //
+// const logger = (req,res,next)=> {
+//     console.log('URL:', req.url);
+//     console.log('Method:', req.method);
+    
+//     next();
+// }
+
+// app.use(logger)
+
+// app.get('/',(req,res)=> {
+//     res.send('welcome to home page')
+// });
+
+// app.get('/about',(req,res)=> {
+//     res.send('welcome to about page')
+// });
+
+
+
+// AUTHORIZED METHOD //
+const auth = (req,res,next)=> {
+
+    const token = req.headers.token;
+
+    if(token === '123456') {
+        
+        next()
+    }
+    else {
+        res.status(401).send('unauthorized')
+    }
+
+}
+
+app.get('/profile', auth, (req,res)=> {
+
+        res.send('welcome user')
     });
-});
+
 
 app.listen(PORT,()=> {
     console.log(`server is running on port ${PORT}`);
