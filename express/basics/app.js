@@ -223,25 +223,27 @@ const PORT = 3000
 
 
 // AUTHORIZED METHOD //
-const auth = (req,res,next)=> {
+// const auth = (req,res,next)=> {
 
-    const token = req.headers.token;
+//     const token = req.headers.token;
 
-    if(token === '123456') {
+//     if(token === '123456') {
         
-        next()
-    }
-    else {
-        res.status(401).send('unauthorized')
-    }
+//         next()
+//     }
+//     else {
+//         res.status(401).send('unauthorized')
+//     }
 
-}
+// }
 
-app.get('/profile', auth, (req,res)=> {
+// app.get('/profile', auth, (req,res)=> {
 
-        res.send('welcome user')
-    });
+//         res.send('welcome user')
+//     });
 
+
+app.use(express.static('public'));
 
 app.listen(PORT,()=> {
     console.log(`server is running on port ${PORT}`);
