@@ -45,39 +45,62 @@ export const Register = async(req, res, next)=> {
 
 export const login = async(req, res, next)=> {
 
-    try{
-        const {email, password} = req.body
+    try {
+        const { email, password } = req.body;
 
-        if(!email) {
-            console.log('email is required');
+        if (!email) {
+            return res.status(400).json({
+                status: false,
+                message: 'Email is required'
+            });
         }
-        else {
-            const user = await User.findOne({email})
 
-            if(!user) {
-                console.log('invalid email');
-            }
-            
-            if(isPassword) {
+        const user = await User.findOne({ email });
 
-                const token = jwt.sign(
-                    {userId:user._id, userEmail:user.email},
-                    process.env.JWT_SECRET,
-                    {expiresIn:process.env.JWT_TOKEN_EXPIRY}
-                );
-
-                res.status(200).json({
-                    status: true,
-                    message: 'successful',
-                    data: null,
-                    result: user,
-                    access_token: token
-                })
-            }
+        if (!user) {
+            return res.status(401).json({
+                status: false,
+                message: 'Invalid email'
+            });
         }
+
+        const isPassword = await bcrypt.compare(
+            req.body.password, user.password
+        );
+
+        if (!isPassword) {
+            return res.status(401).json({
+                status: false,
+                message: 'Invalid password'
+            });
+        }
+
+        const token = jwt.sign(
+            {
+                userId: user._id,
+                userEmail: user.email
+            },
+            process.env.JWT_SECRET,
+            {
+                expiresIn: process.env.JWT_TOKEN_EXPIRY
+            }
+        );
+
+        return res.status(200).json({
+            status: true,
+            message: 'Successful',
+            data: null,
+            result: user,
+            access_token: token
+        });
+
+    } catch (err) {
+        console.error(err);
+
+        return res.status(500).json({
+            status: false,
+            message: 'Internal Server Error'
+        });
     }
-    catch(err) {
-        console.log('err');
-        
-    }
+
 }
