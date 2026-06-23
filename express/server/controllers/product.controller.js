@@ -52,3 +52,21 @@ export const getProduct = async(req, res, next)=> {
         
     }
 }
+
+
+
+export const getProduct = async(req, res, next)=> {
+    try {
+
+        const listProduct = await Product.find();
+        res.status(200).json({
+            status: true,
+            message: 'successful',
+            data: listProduct
+        })
+    }
+    catch(err) {
+        console.log(err);
+        
+    }
+}
