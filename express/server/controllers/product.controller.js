@@ -1,5 +1,8 @@
 
 
+import Product from '../model/product.js'
+
+
 export const addProducts = async(req, res, next)=> {
 
     try {
@@ -24,6 +27,25 @@ export const addProducts = async(req, res, next)=> {
             })
         }
         
+    }
+    catch(err) {
+        console.log(err);
+        
+    }
+}
+
+
+export const getProduct = async(req, res, next)=> {
+
+    try{
+
+        const getProduct = await Product.find()
+        res.status(200).json({
+            status: true,
+            message: 'successful',
+            data: getProduct
+        })
+
     }
     catch(err) {
         console.log(err);
