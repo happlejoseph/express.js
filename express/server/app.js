@@ -17,6 +17,7 @@ connection()
 
 app.use(express.json())
 app.use('/user', userRoute)
+app.use('/products', produtRoute)
 
 
 app.listen(port,()=> {
