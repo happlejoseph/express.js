@@ -102,3 +102,52 @@ export const singleProduct = async(req, res, next)=> {
         
     }
 }
+
+
+
+// edit & update //
+export const updateProduct = async(req, res, next)=> {
+
+    try {
+
+        const {id, name, des, price} = req.body
+
+        if(!id) {
+            return res.status(400).json({
+                message: 'id is required'
+            })
+        }
+
+        const product = await Product.findById(id)
+            if(!product) {
+                return res.status(400).json({
+                    message: 'product not found'
+                })
+            }
+
+        const updateData = {}
+        
+        if(name) updateData.name = name
+        if(des) updateData.des = des
+        if(price) updateData.price = price
+
+        const updatedProduct = await Product.findByIdAndUpdate(id, updateData,{
+            new: true,
+        })
+
+        res.status(200).json({
+            status: true,
+            message: 'successful',
+            data: updatedProduct
+        })
+
+    }
+    catch(err) {
+        console.log(err);
+
+        res.status(500).json({
+            message: err.message
+        })
+        
+    }
+}
