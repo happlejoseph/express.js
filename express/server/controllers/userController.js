@@ -3,9 +3,10 @@
 import bcrypt from 'bcrypt'
 import user from '../model/user.js'
 import jwt from 'jsonwebtoken'
+import User from '../model/user.js'
 
 
-
+// register
 export const Register = async(req, res, next)=> {
 
     try {
@@ -43,6 +44,8 @@ export const Register = async(req, res, next)=> {
 }
 
 
+
+//login
 export const login = async(req, res, next)=> {
 
     try {
@@ -103,4 +106,27 @@ export const login = async(req, res, next)=> {
         });
     }
 
+}
+
+
+// get //
+export const getEmployee = async(req, res, next)=> {
+
+    try {
+
+        const getEmployee = await User.find()
+
+        res.status(200).json({
+            status: true,
+            message: 'successful',
+            data: getEmployee
+        })
+    }
+    catch(err) {
+        console.log(err);
+        return res.status(500).json({
+            message:'server error'
+        })
+        
+    }
 }
