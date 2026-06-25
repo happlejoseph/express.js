@@ -16,7 +16,7 @@ export const addProducts = async(req, res, next)=> {
         }
 
         if(req.file && req.file.filename) {
-            
+            newProducts.image = req.file.filename
         }
         else {
             const newProducts = new Product({
