@@ -1,10 +1,11 @@
 import { Router } from "express";
 import { addProducts, deleteProduct, getProduct, singleProduct, updateProduct } from "../controllers/product.controller.js";
+import upload from "../middleware/upload.js";
 
 
 const router = Router()
 
-router.post('/add', addProducts)
+router.post('/add', upload.single(image), addProducts)
 router.get('/getall', getProduct)
 router.get('/single', singleProduct)
 router.put('/update', updateProduct)

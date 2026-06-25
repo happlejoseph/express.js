@@ -7,12 +7,16 @@ export const addProducts = async(req, res, next)=> {
 
     try {
 
-        const {name, des, price} = req.body
+        const {name, des, price, image} = req.body
 
-        if(!name || !des || !price) {
+        if(!name || !des || !price || !image) {
             return res.status(400).json({
                 message: 'all field required'
             })
+        }
+
+        if(req.file && req.file.filename) {
+            
         }
         else {
             const newProducts = new Product({
