@@ -108,26 +108,3 @@ export const login = async(req, res, next)=> {
     }
 
 }
-
-
-// get //
-export const getUser = async(req, res, next)=> {
-
-    try {
-
-        const getUser = await User.find()
-
-        res.status(200).json({
-            status: true,
-            message: 'successful',
-            data: getUser
-        })
-    }
-    catch(err) {
-        console.log(err);
-        return res.status(500).json({
-            message:'server error'
-        })
-        
-    }
-}

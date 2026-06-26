@@ -20,9 +20,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    image: {
+    role: {
         type: String,
-        require: true
+        default: 'user',
+        enum: ['user','admin','manager']
     }
 },{timestamps:true})
 

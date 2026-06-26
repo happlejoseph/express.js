@@ -15,10 +15,9 @@ const productSchema = new mongoose.Schema({
         type: Number,
         require: true
     },
-    role: {
+    image: {
         type: String,
-        default: 'user',
-        enum: ['user','admin','manager']
+        require: true
     }
 }, {timestamps:true})
 
