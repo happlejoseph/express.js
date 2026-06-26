@@ -15,14 +15,14 @@ export const addProducts = async(req, res, next)=> {
             })
         }
 
-        if(req.file && req.file.filename) {
-            newProducts.image = req.file.filename
-        }
         else {
             const newProducts = new Product({
                 name, des, price
             })
 
+        if(req.file && req.file.filename) {
+            newProducts.image = req.file.filename
+        }
             const saveProducts = await newProducts.save()
             res.status(200).json({
                 status: true,

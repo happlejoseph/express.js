@@ -81,7 +81,8 @@ export const login = async(req, res, next)=> {
         const token = jwt.sign(
             {
                 userId: user._id,
-                userEmail: user.email
+                userEmail: user.email,
+                role: user.role
             },
             process.env.JWT_SECRET,
             {
@@ -110,16 +111,16 @@ export const login = async(req, res, next)=> {
 
 
 // get //
-export const getEmployee = async(req, res, next)=> {
+export const getUser = async(req, res, next)=> {
 
     try {
 
-        const getEmployee = await User.find()
+        const getUser = await User.find()
 
         res.status(200).json({
             status: true,
             message: 'successful',
-            data: getEmployee
+            data: getUser
         })
     }
     catch(err) {
